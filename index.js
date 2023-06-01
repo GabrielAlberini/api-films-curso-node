@@ -10,6 +10,9 @@ import {
   updateItem,
 } from "./controllers/films.js";
 
+import { createfileItem } from "./controllers/file.js";
+import { uploadMiddleware } from "./middleware/file.js";
+
 const app = express();
 app.use(express.json());
 
@@ -29,6 +32,9 @@ app.delete("/api/films/:id", deleteItem);
 
 //Update film
 app.put("/api/films/:id", updateItem);
+
+//Upload file
+app.post("/api/films/file", uploadMiddleware.single("myfile"), createfileItem);
 
 app.listen(port, () => {
   console.log(`Server on ${port}`);
